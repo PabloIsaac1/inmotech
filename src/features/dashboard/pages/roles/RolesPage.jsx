@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  MdAdd, 
-  MdSearch, 
-  MdEdit, 
-  MdDelete, 
-  MdVisibility,
-  MdClose,
-  MdSave,
-  MdCancel,
-  MdSecurity,
-  MdCheck,
-  MdPerson,
-  MdAdminPanelSettings
-} from 'react-icons/md';
+  Plus,
+  Search,
+  Edit3,
+  Trash2,
+  Eye,
+  X,
+  Save,
+  XCircle,
+  Shield,
+  Check,
+  User,
+  Crown,
+  Settings,
+  Lock,
+  Key,
+  Users,
+  FileText,
+  Calendar,
+  Home,
+  Sparkles,
+  Star
+} from 'lucide-react';
 import DashboardLayout from '../../../../shared/components/dashboard/Layout/DashboardLayout';
 import { useToast } from '../../../../shared/hooks/use-toast';
 
@@ -46,9 +55,9 @@ const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
               <h2 className="text-2xl font-bold text-slate-800">{title}</h2>
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-slate-100 rounded-full transition-colors"
+                className="p-2 hover:bg-red-50 hover:text-red-600 rounded-full transition-colors group"
               >
-                <MdClose size={24} />
+                <X size={24} className="group-hover:rotate-90 transition-transform duration-200" />
               </button>
             </div>
             <div className="overflow-y-auto max-h-[calc(90vh-80px)]">
@@ -64,28 +73,30 @@ const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
 const PermissionCheckbox = ({ permission, isChecked, onChange, disabled = false }) => (
   <motion.div
     whileHover={!disabled ? { scale: 1.02 } : {}}
-    className={`border-2 rounded-xl p-4 transition-all duration-300 ${
+    className={`border-2 rounded-xl p-4 transition-all duration-300 cursor-pointer ${
       isChecked 
-        ? 'border-blue-500 bg-blue-50' 
-        : 'border-slate-200 bg-white hover:border-slate-300'
-    } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+        ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-lg' 
+        : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-md'
+    } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
     onClick={() => !disabled && onChange(!isChecked)}
   >
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
-        <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all duration-300 ${
+        <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all duration-300 shadow-sm ${
           isChecked 
-            ? 'border-blue-500 bg-blue-500' 
+            ? 'border-blue-500 bg-gradient-to-r from-blue-500 to-indigo-600' 
             : 'border-slate-300 bg-white'
         }`}>
-          {isChecked && <MdCheck className="text-white" size={16} />}
+          {isChecked && <Check className="text-white" size={16} />}
         </div>
         <div>
           <h4 className="font-semibold text-slate-800">{permission.name}</h4>
           <p className="text-sm text-slate-600">{permission.description}</p>
         </div>
       </div>
-      <permission.icon className={`${isChecked ? 'text-blue-500' : 'text-slate-400'}`} size={24} />
+      <div className={`p-2 rounded-lg ${isChecked ? 'bg-blue-100' : 'bg-slate-100'}`}>
+        <permission.icon className={`${isChecked ? 'text-blue-600' : 'text-slate-400'}`} size={20} />
+      </div>
     </div>
   </motion.div>
 );
@@ -98,9 +109,11 @@ const ModulePermissions = ({ module, permissions, onChange, disabled = false }) 
   };
 
   return (
-    <div className="border border-slate-200 rounded-xl p-6 bg-slate-50/50">
+    <div className="border border-slate-200 rounded-xl p-6 bg-gradient-to-br from-slate-50/50 to-white shadow-sm hover:shadow-md transition-all duration-300">
       <div className="flex items-center gap-3 mb-4">
-        <module.icon className="text-blue-600" size={24} />
+        <div className="p-2 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-lg">
+          <module.icon className="text-blue-600" size={20} />
+        </div>
         <div>
           <h3 className="text-lg font-bold text-slate-800">{module.name}</h3>
           <p className="text-sm text-slate-600">{module.description}</p>
@@ -137,25 +150,25 @@ const RoleForm = ({ role, onSave, onCancel }) => {
       key: 'properties',
       name: 'Gestión de Inmuebles',
       description: 'Administrar propiedades del sistema',
-      icon: MdSecurity,
+      icon: Home,
       permissions: [
         {
           key: 'create',
           name: 'Crear',
           description: 'Crear nuevas propiedades',
-          icon: MdAdd
+          icon: Plus
         },
         {
           key: 'edit',
           name: 'Editar',
           description: 'Modificar propiedades existentes',
-          icon: MdEdit
+          icon: Edit3
         },
         {
           key: 'delete',
           name: 'Eliminar',
           description: 'Eliminar propiedades',
-          icon: MdDelete
+          icon: Trash2
         }
       ]
     },
@@ -163,25 +176,25 @@ const RoleForm = ({ role, onSave, onCancel }) => {
       key: 'appointments',
       name: 'Gestión de Citas',
       description: 'Administrar citas con clientes',
-      icon: MdSecurity,
+      icon: Calendar,
       permissions: [
         {
           key: 'create',
           name: 'Crear',
           description: 'Programar nuevas citas',
-          icon: MdAdd
+          icon: Plus
         },
         {
           key: 'edit',
           name: 'Editar',
           description: 'Modificar citas existentes',
-          icon: MdEdit
+          icon: Edit3
         },
         {
           key: 'delete',
           name: 'Eliminar',
           description: 'Cancelar/eliminar citas',
-          icon: MdDelete
+          icon: Trash2
         }
       ]
     },
@@ -189,25 +202,25 @@ const RoleForm = ({ role, onSave, onCancel }) => {
       key: 'users',
       name: 'Gestión de Usuarios',
       description: 'Administrar usuarios del sistema',
-      icon: MdPerson,
+      icon: Users,
       permissions: [
         {
           key: 'create',
           name: 'Crear',
           description: 'Crear nuevos usuarios',
-          icon: MdAdd
+          icon: Plus
         },
         {
           key: 'edit',
           name: 'Editar',
           description: 'Modificar usuarios existentes',
-          icon: MdEdit
+          icon: Edit3
         },
         {
           key: 'delete',
           name: 'Eliminar',
           description: 'Eliminar usuarios',
-          icon: MdDelete
+          icon: Trash2
         }
       ]
     },
@@ -215,25 +228,25 @@ const RoleForm = ({ role, onSave, onCancel }) => {
       key: 'reports',
       name: 'Reportes',
       description: 'Generar y visualizar reportes',
-      icon: MdSecurity,
+      icon: FileText,
       permissions: [
         {
           key: 'create',
           name: 'Crear',
           description: 'Generar nuevos reportes',
-          icon: MdAdd
+          icon: Plus
         },
         {
           key: 'edit',
           name: 'Editar',
           description: 'Modificar reportes existentes',
-          icon: MdEdit
+          icon: Edit3
         },
         {
           key: 'delete',
           name: 'Eliminar',
           description: 'Eliminar reportes',
-          icon: MdDelete
+          icon: Trash2
         }
       ]
     }
@@ -361,7 +374,7 @@ const RoleForm = ({ role, onSave, onCancel }) => {
         {isAdminRole && (
           <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-lg">
             <p className="text-amber-800 text-sm">
-              <MdAdminPanelSettings className="inline mr-2" />
+              <Crown className="inline mr-2" />
               El rol de Administrador tiene todos los permisos habilitados por defecto y no pueden ser modificados.
             </p>
           </div>
@@ -372,17 +385,17 @@ const RoleForm = ({ role, onSave, onCancel }) => {
         <div className="flex gap-4 pt-4 border-t border-slate-200">
           <button
             type="submit"
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 font-medium"
+            className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-lg hover:shadow-xl"
           >
-            <MdSave size={20} />
+            <Save size={20} />
             {role ? 'Actualizar' : 'Crear'} Rol
           </button>
           <button
             type="button"
             onClick={onCancel}
-            className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 font-medium"
+            className="flex-1 bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-700 py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-lg hover:shadow-xl"
           >
-            <MdCancel size={20} />
+            <XCircle size={20} />
             Cancelar
           </button>
         </div>
@@ -393,16 +406,16 @@ const RoleForm = ({ role, onSave, onCancel }) => {
 
 const RoleView = ({ role }) => {
   const modules = [
-    { key: 'properties', name: 'Gestión de Inmuebles', icon: MdSecurity },
-    { key: 'appointments', name: 'Gestión de Citas', icon: MdSecurity },
-    { key: 'users', name: 'Gestión de Usuarios', icon: MdPerson },
-    { key: 'reports', name: 'Reportes', icon: MdSecurity }
+    { key: 'properties', name: 'Gestión de Inmuebles', icon: Home },
+    { key: 'appointments', name: 'Gestión de Citas', icon: Calendar },
+    { key: 'users', name: 'Gestión de Usuarios', icon: Users },
+    { key: 'reports', name: 'Reportes', icon: FileText }
   ];
 
   const permissions = [
-    { key: 'create', name: 'Crear', icon: MdAdd },
-    { key: 'edit', name: 'Editar', icon: MdEdit },
-    { key: 'delete', name: 'Eliminar', icon: MdDelete }
+    { key: 'create', name: 'Crear', icon: Plus },
+    { key: 'edit', name: 'Editar', icon: Edit3 },
+    { key: 'delete', name: 'Eliminar', icon: Trash2 }
   ];
 
   return (
@@ -437,10 +450,12 @@ const RoleView = ({ role }) => {
               return (
                 <div key={module.key} className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <module.icon size={16} className="text-slate-600" />
+                    <div className="p-1 bg-slate-100 rounded">
+                      <module.icon size={14} className="text-slate-600" />
+                    </div>
                     <span className="text-sm text-slate-700">{module.name}</span>
                   </div>
-                  <span className="text-sm font-medium text-blue-600">
+                  <span className="text-sm font-medium bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                     {activePerms}/3 permisos
                   </span>
                 </div>
@@ -458,7 +473,9 @@ const RoleView = ({ role }) => {
             return (
               <div key={module.key} className="border border-slate-200 rounded-lg p-4">
                 <div className="flex items-center gap-3 mb-3">
-                  <module.icon className="text-blue-600" size={20} />
+                  <div className="p-2 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-lg">
+                    <module.icon className="text-blue-600" size={16} />
+                  </div>
                   <h4 className="font-semibold text-slate-800">{module.name}</h4>
                 </div>
                 <div className="grid grid-cols-3 gap-4">
@@ -468,13 +485,13 @@ const RoleView = ({ role }) => {
                       <div
                         key={permission.key}
                         className={`flex items-center gap-2 p-2 rounded-lg ${
-                          hasPermission ? 'bg-green-50 text-green-700' : 'bg-slate-50 text-slate-500'
+                          hasPermission ? 'bg-gradient-to-r from-green-50 to-emerald-50 text-green-700 border border-green-200' : 'bg-slate-50 text-slate-500 border border-slate-200'
                         }`}
                       >
-                        <div className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
-                          hasPermission ? 'border-green-500 bg-green-500' : 'border-slate-300'
+                        <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shadow-sm ${
+                          hasPermission ? 'border-green-500 bg-gradient-to-r from-green-500 to-emerald-600' : 'border-slate-300'
                         }`}>
-                          {hasPermission && <MdCheck className="text-white" size={12} />}
+                          {hasPermission && <Check className="text-white" size={10} />}
                         </div>
                         <span className="text-sm font-medium">{permission.name}</span>
                       </div>
@@ -492,8 +509,8 @@ const RoleView = ({ role }) => {
 
 const DeleteConfirmation = ({ role, onConfirm, onCancel }) => (
   <div className="p-6 text-center">
-    <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-      <MdDelete size={32} className="text-red-600" />
+    <div className="w-16 h-16 bg-gradient-to-r from-red-100 to-red-200 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+      <Trash2 size={32} className="text-red-600" />
     </div>
     <h3 className="text-xl font-bold text-slate-800 mb-2">¿Eliminar rol?</h3>
     <p className="text-slate-600 mb-6">
@@ -502,13 +519,13 @@ const DeleteConfirmation = ({ role, onConfirm, onCancel }) => (
     <div className="flex gap-4">
       <button
         onClick={onCancel}
-        className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-3 px-6 rounded-lg transition-colors font-medium"
+        className="flex-1 bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-700 py-3 px-6 rounded-lg transition-all duration-200 font-medium shadow-lg"
       >
         Cancelar
       </button>
       <button
         onClick={onConfirm}
-        className="flex-1 bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-lg transition-colors font-medium"
+        className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-3 px-6 rounded-lg transition-all duration-200 font-medium shadow-lg"
       >
         Eliminar
       </button>
@@ -613,9 +630,9 @@ const RolesPage = () => {
           </div>
           <button
             onClick={() => setShowCreateModal(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors font-medium"
+            className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
           >
-            <MdAdd size={20} />
+            <Plus size={20} />
             Nuevo Rol
           </button>
         </motion.div>
@@ -625,16 +642,16 @@ const RolesPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg"
+          className="bg-gradient-to-br from-white to-slate-50/50 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
         >
           <div className="relative max-w-md">
-            <MdSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
             <input
               type="text"
               placeholder="Buscar roles..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/80 backdrop-blur-sm"
             />
           </div>
         </motion.div>
@@ -647,17 +664,17 @@ const RolesPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 + index * 0.1 }}
-              className="bg-white/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-gradient-to-br from-white to-slate-50/50 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group"
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                    role.isSystem ? 'bg-amber-100' : 'bg-blue-100'
+                    role.isSystem ? 'bg-gradient-to-r from-amber-100 to-orange-100' : 'bg-gradient-to-r from-blue-100 to-indigo-100'
                   }`}>
                     {role.isSystem ? (
-                      <MdAdminPanelSettings className="text-amber-600" size={24} />
+                      <Crown className="text-amber-600" size={24} />
                     ) : (
-                      <MdSecurity className="text-blue-600" size={24} />
+                      <Shield className="text-blue-600" size={24} />
                     )}
                   </div>
                   <div>
@@ -668,7 +685,7 @@ const RolesPage = () => {
                   </div>
                 </div>
                 {role.isSystem && (
-                  <span className="px-2 py-1 bg-amber-100 text-amber-800 text-xs font-medium rounded-full">
+                  <span className="px-3 py-1 bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 text-xs font-medium rounded-full border border-amber-200 shadow-sm">
                     Sistema
                   </span>
                 )}
@@ -693,9 +710,9 @@ const RolesPage = () => {
                     setSelectedRole(role);
                     setShowViewModal(true);
                   }}
-                  className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+                  className="flex-1 bg-gradient-to-r from-slate-100 to-slate-200 hover:from-slate-200 hover:to-slate-300 text-slate-700 py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-md"
                 >
-                  <MdVisibility size={16} />
+                  <Eye size={16} />
                   Ver
                 </button>
                 <button
@@ -703,9 +720,9 @@ const RolesPage = () => {
                     setSelectedRole(role);
                     setShowEditModal(true);
                   }}
-                  className="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+                  className="flex-1 bg-gradient-to-r from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-300 text-blue-700 py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-md"
                 >
-                  <MdEdit size={16} />
+                  <Edit3 size={16} />
                   Editar
                 </button>
                 {!role.isSystem && (
@@ -714,9 +731,9 @@ const RolesPage = () => {
                       setSelectedRole(role);
                       setShowDeleteModal(true);
                     }}
-                    className="flex-1 bg-red-100 hover:bg-red-200 text-red-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 bg-gradient-to-r from-red-100 to-red-200 hover:from-red-200 hover:to-red-300 text-red-700 py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-md"
                   >
-                    <MdDelete size={16} />
+                    <Trash2 size={16} />
                     Eliminar
                   </button>
                 )}
