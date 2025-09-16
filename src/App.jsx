@@ -14,6 +14,9 @@ import ServicesPage from './features/services/pages/ServicesPage'
 import LoginPage from './features/auth/pages/LoginPage'
 import RegisterPage from './features/auth/pages/RegisterPage'
 import DashboardPage from './features/dashboard/DashboardPage'
+import PropertiesManagementPage from './features/dashboard/pages/properties/PropertiesManagementPage'
+import AppointmentsManagementPage from './features/dashboard/pages/appointments/AppointmentsManagementPage'
+import RolesPage from './features/dashboard/pages/roles/RolesPage'
 
 
 function App() {
@@ -83,6 +86,9 @@ function App() {
 
         {/* Dashboard routes without navbar/footer */}
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/dashboard/inmuebles" element={<PropertiesManagementPage />} />
+        <Route path="/dashboard/citas" element={<AppointmentsManagementPage />} />
+        <Route path="/dashboard/roles" element={<RolesPage />} />
 
 
       </Routes>

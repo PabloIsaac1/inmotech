@@ -1,8 +1,17 @@
 "use client"
 import { motion, AnimatePresence } from "framer-motion"
+import { useNavigate } from "react-router-dom"
 
 const SidebarItem = ({ item, isCollapsed, isExpanded, isActive, activeSubItem, onItemClick, onSubItemClick }) => {
+  const navigate = useNavigate()
   const hasSubItems = item.subItems && item.subItems.length > 0
+
+  const handleSubItemClick = (subItem) => {
+    onSubItemClick(subItem.id)
+    if (subItem.path) {
+      navigate(subItem.path)
+    }
+  }
 
   return (
     <div className="relative">
@@ -106,7 +115,7 @@ const SidebarItem = ({ item, isCollapsed, isExpanded, isActive, activeSubItem, o
                   x: 0
                 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => onSubItemClick(subItem.id)}
+                onClick={() => handleSubItemClick(subItem)}
                 className={`
                   flex items-center pl-4 md:pl-6 pr-4 py-1.5 md:py-2.5 ml-2 mr-2 rounded-lg cursor-pointer transition-all duration-300 group relative
                   ${

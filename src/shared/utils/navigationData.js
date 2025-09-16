@@ -36,7 +36,7 @@ import {
         {
           id: 'gestion-inmuebles',
           title: 'Gestión de Inmuebles',
-          path: '/inmuebles/gestion'
+          path: '/dashboard/inmuebles'
         }
       ]
     },
@@ -54,7 +54,7 @@ import {
         {
           id: 'gestion-citas',
           title: 'Gestión de Citas',
-          path: '/citas/gestion'
+          path: '/dashboard/citas'
         }
       ]
     },
@@ -121,7 +121,7 @@ import {
         {
           id: 'roles',
           title: 'Roles',
-          path: '/seguridad/roles'
+          path: '/dashboard/roles'
         }
       ]
     }
