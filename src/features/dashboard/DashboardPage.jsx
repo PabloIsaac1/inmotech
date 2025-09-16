@@ -1,15 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  MdTrendingUp, 
-  MdHome, 
-  MdCalendarToday, 
-  MdAttachMoney,
-  MdPeople,
-  MdVisibility,
-  MdSchedule,
-  MdLocationOn
+  TrendingUp,
+  Home,
+  Calendar,
+  DollarSign,
+  Users,
+  Eye,
+  Clock,
+  MapPin,
+  Building2,
+  UserCheck,
+  Target,
+  Award,
+  Zap,
+  Activity,
+  BarChart3,
+  PieChart,
+  LineChart
 } from 'react-icons/md';
+import { 
+  Building, 
+  CalendarDays, 
+  Banknote, 
+  UsersRound,
+  Sparkles,
+  Crown,
+  Gem,
+  Star
+} from 'lucide-react';
 import DashboardLayout from '../../shared/components/dashboard/Layout/DashboardLayout';
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
 import {
@@ -41,22 +60,23 @@ const StatCard = ({ title, value, icon: Icon, trend, color, subtitle }) => (
   <motion.div
     whileHover={{ y: -5, scale: 1.02 }}
     transition={{ duration: 0.3 }}
-    className={`bg-gradient-to-br ${color} rounded-2xl p-6 text-white shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden`}
+    className={`bg-gradient-to-br ${color} rounded-2xl p-6 text-white shadow-lg hover:shadow-2xl transition-all duration-300 relative overflow-hidden border border-white/20`}
   >
-    <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-10 -mt-10"></div>
+    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+    <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full -ml-12 -mb-12"></div>
     <div className="flex items-center justify-between relative z-10">
       <div>
         <p className="text-white/80 text-sm font-medium">{title}</p>
-        <p className="text-3xl font-bold mt-2">{value}</p>
+        <p className="text-3xl font-bold mt-2 bg-gradient-to-r from-white to-white/90 bg-clip-text">{value}</p>
         {subtitle && <p className="text-white/70 text-xs mt-1">{subtitle}</p>}
         {trend && (
           <div className="flex items-center mt-2">
-            <MdTrendingUp size={16} />
-            <span className="text-sm ml-1">+{trend}% este mes</span>
+            <TrendingUp size={16} />
+            <span className="text-sm ml-1 font-medium">+{trend}% este mes</span>
           </div>
         )}
       </div>
-      <div className="bg-white/20 p-3 rounded-xl">
+      <div className="bg-white/20 backdrop-blur-sm p-4 rounded-2xl shadow-lg border border-white/30">
         <Icon size={32} />
       </div>
     </div>
@@ -70,33 +90,33 @@ const DashboardContent = () => {
     {
       title: 'Propiedades Activas',
       value: '156',
-      icon: MdHome,
+      icon: Building,
       trend: '12',
-      color: 'from-blue-600 to-blue-700',
+      color: 'from-blue-500 via-blue-600 to-indigo-700',
       subtitle: '23 nuevas este mes'
     },
     {
       title: 'Citas Programadas',
       value: '24',
-      icon: MdCalendarToday,
+      icon: CalendarDays,
       trend: '8',
-      color: 'from-emerald-500 to-emerald-600',
+      color: 'from-emerald-500 via-teal-500 to-cyan-600',
       subtitle: '8 para hoy'
     },
     {
       title: 'Ventas del Mes',
       value: '8',
-      icon: MdTrendingUp,
+      icon: TrendingUp,
       trend: '25',
-      color: 'from-purple-500 to-purple-600',
+      color: 'from-purple-500 via-violet-500 to-purple-700',
       subtitle: '$2.4M generados'
     },
     {
       title: 'Clientes Activos',
       value: '342',
-      icon: MdPeople,
+      icon: UsersRound,
       trend: '18',
-      color: 'from-amber-500 to-amber-600',
+      color: 'from-orange-400 via-amber-500 to-yellow-600',
       subtitle: '45 nuevos este mes'
     }
   ];
@@ -108,16 +128,26 @@ const DashboardContent = () => {
       {
         label: 'Ventas',
         data: [12, 19, 15, 25, 22, 30],
-        borderColor: 'rgb(59, 130, 246)',
-        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+        borderColor: 'rgb(99, 102, 241)',
+        backgroundColor: 'rgba(99, 102, 241, 0.1)',
         tension: 0.4,
+        borderWidth: 3,
+        pointBackgroundColor: 'rgb(99, 102, 241)',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointRadius: 6,
       },
       {
         label: 'Arriendos',
         data: [8, 12, 10, 15, 18, 20],
-        borderColor: 'rgb(16, 185, 129)',
-        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+        borderColor: 'rgb(34, 197, 94)',
+        backgroundColor: 'rgba(34, 197, 94, 0.1)',
         tension: 0.4,
+        borderWidth: 3,
+        pointBackgroundColor: 'rgb(34, 197, 94)',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointRadius: 6,
       }
     ],
   };
@@ -129,13 +159,14 @@ const DashboardContent = () => {
         label: 'Propiedades por Tipo',
         data: [45, 62, 23, 18, 8],
         backgroundColor: [
-          'rgba(59, 130, 246, 0.8)',
-          'rgba(16, 185, 129, 0.8)',
-          'rgba(245, 158, 11, 0.8)',
-          'rgba(239, 68, 68, 0.8)',
-          'rgba(139, 92, 246, 0.8)',
+          'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+          'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+          'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+          'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
         ],
         borderRadius: 8,
+        borderWidth: 0,
       },
     ],
   };
@@ -146,12 +177,14 @@ const DashboardContent = () => {
       {
         data: [30, 45, 25, 56],
         backgroundColor: [
-          '#10B981',
-          '#3B82F6',
-          '#F59E0B',
-          '#EF4444',
+          '#22c55e',
+          '#3b82f6',
+          '#f59e0b',
+          '#ef4444',
         ],
-        borderWidth: 0,
+        borderWidth: 3,
+        borderColor: '#fff',
+        hoverBorderWidth: 4,
       },
     ],
   };
@@ -176,31 +209,36 @@ const DashboardContent = () => {
       action: 'Nueva propiedad registrada', 
       time: 'Hace 2 horas', 
       type: 'success',
-      details: 'Casa en El Poblado - $850,000'
+      details: 'Casa en El Poblado - $850,000',
+      icon: Building
     },
     { 
       action: 'Cita programada', 
       time: 'Hace 4 horas', 
       type: 'info',
-      details: 'Juan Pérez - Apartamento Laureles'
+      details: 'Juan Pérez - Apartamento Laureles',
+      icon: CalendarDays
     },
     { 
       action: 'Venta completada', 
       time: 'Hace 6 horas', 
       type: 'success',
-      details: 'Penthouse Envigado - $1,200,000'
+      details: 'Penthouse Envigado - $1,200,000',
+      icon: TrendingUp
     },
     { 
       action: 'Cliente registrado', 
       time: 'Hace 8 horas', 
       type: 'info',
-      details: 'María González - Interesada en casas'
+      details: 'María González - Interesada en casas',
+      icon: UsersRound
     },
     { 
       action: 'Cita cancelada', 
       time: 'Hace 1 día', 
       type: 'warning',
-      details: 'Carlos Rodríguez - Reagendada'
+      details: 'Carlos Rodríguez - Reagendada',
+      icon: Clock
     }
   ];
 
@@ -279,11 +317,16 @@ const DashboardContent = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="bg-white/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg"
+          className="bg-gradient-to-br from-white to-slate-50/50 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
         >
-          <h3 className="text-xl font-semibold text-slate-800 mb-4">
-            Tendencia de Ventas y Arriendos
-          </h3>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg">
+              <LineChart className="h-5 w-5 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold text-slate-800">
+              Tendencia de Ventas y Arriendos
+            </h3>
+          </div>
           <div className="h-64">
             <Line data={lineChartData} options={chartOptions} />
           </div>
@@ -294,11 +337,16 @@ const DashboardContent = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="bg-white/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg"
+          className="bg-gradient-to-br from-white to-slate-50/50 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
         >
-          <h3 className="text-xl font-semibold text-slate-800 mb-4">
-            Propiedades por Tipo
-          </h3>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg">
+              <BarChart3 className="h-5 w-5 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold text-slate-800">
+              Propiedades por Tipo
+            </h3>
+          </div>
           <div className="h-64">
             <Bar data={barChartData} options={chartOptions} />
           </div>
@@ -312,11 +360,16 @@ const DashboardContent = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          className="lg:col-span-2 bg-white/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg"
+          className="lg:col-span-2 bg-gradient-to-br from-white to-slate-50/50 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
         >
-          <h3 className="text-xl font-semibold text-slate-800 mb-4">
-            Actividad Reciente
-          </h3>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg">
+              <Activity className="h-5 w-5 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold text-slate-800">
+              Actividad Reciente
+            </h3>
+          </div>
           <div className="space-y-4 max-h-80 overflow-y-auto">
             {recentActivities.map((activity, index) => (
               <motion.div
@@ -324,16 +377,18 @@ const DashboardContent = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.7 + index * 0.1 }}
-                className="flex items-start justify-between p-4 rounded-xl hover:bg-slate-50/80 transition-all duration-300 border border-slate-100"
+                className="flex items-start justify-between p-4 rounded-xl hover:bg-gradient-to-r hover:from-slate-50 hover:to-blue-50/30 transition-all duration-300 border border-slate-100 group"
               >
                 <div className="flex items-start space-x-3">
-                  <div className={`w-3 h-3 rounded-full mt-2 ${
+                  <div className={`p-2 rounded-lg mt-0.5 ${
                     activity.type === 'success' ? 'bg-emerald-500' :
                     activity.type === 'info' ? 'bg-blue-500' :
                     activity.type === 'warning' ? 'bg-amber-500' : 'bg-slate-400'
-                  }`} />
+                  }`}>
+                    <activity.icon className="h-4 w-4 text-white" />
+                  </div>
                   <div>
-                    <p className="font-medium text-slate-700">{activity.action}</p>
+                    <p className="font-medium text-slate-700 group-hover:text-slate-900 transition-colors">{activity.action}</p>
                     <p className="text-sm text-slate-500">{activity.details}</p>
                   </div>
                 </div>
@@ -350,11 +405,16 @@ const DashboardContent = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.7 }}
-            className="bg-white/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg"
+            className="bg-gradient-to-br from-white to-slate-50/50 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <h3 className="text-xl font-semibold text-slate-800 mb-4">
-              Estado de Propiedades
-            </h3>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg">
+                <PieChart className="h-5 w-5 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800">
+                Estado de Propiedades
+              </h3>
+            </div>
             <div className="h-48">
               <Doughnut data={doughnutData} options={{ responsive: true, maintainAspectRatio: false }} />
             </div>
@@ -365,16 +425,21 @@ const DashboardContent = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.8 }}
-            className="bg-white/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg"
+            className="bg-gradient-to-br from-white to-slate-50/50 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <h3 className="text-xl font-semibold text-slate-800 mb-4">
-              Próximas Citas
-            </h3>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg">
+                <CalendarDays className="h-5 w-5 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800">
+                Próximas Citas
+              </h3>
+            </div>
             <div className="space-y-3">
               {upcomingAppointments.map((appointment, index) => (
-                <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-slate-50/50 border border-slate-100">
+                <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-gradient-to-r from-slate-50/50 to-blue-50/30 border border-slate-100 hover:shadow-md transition-all duration-200">
                   <div className="flex items-center space-x-3">
-                    <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 shadow-sm"></div>
                     <div>
                       <p className="font-medium text-sm text-slate-700">{appointment.client}</p>
                       <p className="text-xs text-slate-500">{appointment.property}</p>

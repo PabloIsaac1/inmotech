@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  MdAdd, 
-  MdSearch, 
-  MdFilterList, 
-  MdEdit, 
-  MdDelete, 
-  MdVisibility,
-  MdClose,
-  MdHome,
-  MdLocationOn,
-  MdAttachMoney,
-  MdBed,
-  MdBathtub,
-  MdDirectionsCar,
-  MdPhotoCamera,
-  MdSave,
-  MdCancel
-} from 'react-icons/md';
+  Plus,
+  Search,
+  Filter,
+  Edit3,
+  Trash2,
+  Eye,
+  X,
+  Home,
+  MapPin,
+  DollarSign,
+  Bed,
+  Bath,
+  Car,
+  Camera,
+  Save,
+  XCircle,
+  Building2,
+  Sparkles,
+  Star,
+  Crown
+} from 'lucide-react';
 import DashboardLayout from '../../../../shared/components/dashboard/Layout/DashboardLayout';
 import { useToast } from '../../../../shared/hooks/use-toast';
 
@@ -50,9 +54,9 @@ const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
               <h2 className="text-2xl font-bold text-slate-800">{title}</h2>
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-slate-100 rounded-full transition-colors"
+                className="p-2 hover:bg-red-50 hover:text-red-600 rounded-full transition-colors group"
               >
-                <MdClose size={24} />
+                <X size={24} className="group-hover:rotate-90 transition-transform duration-200" />
               </button>
             </div>
             <div className="overflow-y-auto max-h-[calc(90vh-80px)]">
@@ -70,80 +74,82 @@ const PropertyCard = ({ property, onEdit, onDelete, onView }) => (
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     whileHover={{ y: -5 }}
-    className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-200"
+    className="bg-gradient-to-br from-white to-slate-50/50 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-200/60 group"
   >
     <div className="relative h-48">
       <img
         src={property.image || "/api/placeholder/400/300"}
         alt={property.title}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
       />
       <div className="absolute top-4 right-4">
         <span className={`px-3 py-1 rounded-full text-sm font-medium ${
           property.status === 'Venta' 
-            ? 'bg-blue-100 text-blue-800' 
-            : 'bg-green-100 text-green-800'
+            ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg' 
+            : 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg'
         }`}>
           {property.status}
         </span>
       </div>
       <div className="absolute top-4 left-4">
-        <span className="px-3 py-1 rounded-full text-sm font-medium bg-white/90 text-slate-800">
+        <span className="px-3 py-1 rounded-full text-sm font-medium bg-white/95 backdrop-blur-sm text-slate-800 shadow-lg border border-white/50">
           {property.type}
         </span>
       </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
     </div>
     
     <div className="p-6">
       <h3 className="text-xl font-bold text-slate-800 mb-2">{property.title}</h3>
       <div className="flex items-center text-slate-600 mb-3">
-        <MdLocationOn className="mr-1" size={16} />
+        <MapPin className="mr-1 text-red-500" size={16} />
         <span className="text-sm">{property.address}</span>
       </div>
       
       <div className="flex items-center justify-between mb-4">
-        <span className="text-2xl font-bold text-blue-600">{property.price}</span>
-        <span className="text-sm text-slate-500">{property.area} m²</span>
+        <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{property.price}</span>
+        <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-full">{property.area} m²</span>
       </div>
       
-      <div className="flex items-center justify-between text-sm text-slate-600 mb-4">
-        <div className="flex items-center">
-          <MdBed className="mr-1" />
+      <div className="grid grid-cols-4 gap-2 text-sm text-slate-600 mb-4">
+        <div className="flex items-center justify-center bg-blue-50 p-2 rounded-lg">
+          <Bed className="mr-1 text-blue-500" size={16} />
           <span>{property.bedrooms}</span>
         </div>
-        <div className="flex items-center">
-          <MdBathtub className="mr-1" />
+        <div className="flex items-center justify-center bg-cyan-50 p-2 rounded-lg">
+          <Bath className="mr-1 text-cyan-500" size={16} />
           <span>{property.bathrooms}</span>
         </div>
-        <div className="flex items-center">
-          <MdDirectionsCar className="mr-1" />
+        <div className="flex items-center justify-center bg-green-50 p-2 rounded-lg">
+          <Car className="mr-1 text-green-500" size={16} />
           <span>{property.parking}</span>
         </div>
-        <div className="text-center">
-          <span className="font-medium">Estrato {property.stratum}</span>
+        <div className="flex items-center justify-center bg-purple-50 p-2 rounded-lg">
+          <Star className="mr-1 text-purple-500" size={16} />
+          <span>{property.stratum}</span>
         </div>
       </div>
       
       <div className="flex gap-2">
         <button
           onClick={() => onView(property)}
-          className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+          className="flex-1 bg-gradient-to-r from-slate-100 to-slate-200 hover:from-slate-200 hover:to-slate-300 text-slate-700 py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-md"
         >
-          <MdVisibility size={16} />
+          <Eye size={16} />
           Ver
         </button>
         <button
           onClick={() => onEdit(property)}
-          className="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+          className="flex-1 bg-gradient-to-r from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-300 text-blue-700 py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-md"
         >
-          <MdEdit size={16} />
+          <Edit3 size={16} />
           Editar
         </button>
         <button
           onClick={() => onDelete(property)}
-          className="flex-1 bg-red-100 hover:bg-red-200 text-red-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+          className="flex-1 bg-gradient-to-r from-red-100 to-red-200 hover:from-red-200 hover:to-red-300 text-red-700 py-2 px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-md"
         >
-          <MdDelete size={16} />
+          <Trash2 size={16} />
           Eliminar
         </button>
       </div>
@@ -384,17 +390,17 @@ const PropertyForm = ({ property, onSave, onCancel }) => {
       <div className="flex gap-4 pt-4 border-t border-slate-200">
         <button
           type="submit"
-          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 font-medium"
+          className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-lg hover:shadow-xl"
         >
-          <MdSave size={20} />
+          <Save size={20} />
           {property ? 'Actualizar' : 'Crear'} Propiedad
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 font-medium"
+          className="flex-1 bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-700 py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-lg hover:shadow-xl"
         >
-          <MdCancel size={20} />
+          <XCircle size={20} />
           Cancelar
         </button>
       </div>
@@ -424,7 +430,7 @@ const PropertyView = ({ property }) => (
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-slate-50 p-4 rounded-lg">
             <p className="text-sm text-slate-600">Precio</p>
-            <p className="text-xl font-bold text-blue-600">{property.price}</p>
+            <p className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{property.price}</p>
           </div>
           <div className="bg-slate-50 p-4 rounded-lg">
             <p className="text-sm text-slate-600">Área</p>
@@ -434,22 +440,30 @@ const PropertyView = ({ property }) => (
         
         <div className="grid grid-cols-4 gap-4">
           <div className="text-center">
-            <MdBed size={24} className="mx-auto text-slate-600" />
+            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <Bed size={24} className="text-blue-600" />
+            </div>
             <p className="text-sm text-slate-600 mt-1">Habitaciones</p>
             <p className="font-bold">{property.bedrooms}</p>
           </div>
           <div className="text-center">
-            <MdBathtub size={24} className="mx-auto text-slate-600" />
+            <div className="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <Bath size={24} className="text-cyan-600" />
+            </div>
             <p className="text-sm text-slate-600 mt-1">Baños</p>
             <p className="font-bold">{property.bathrooms}</p>
           </div>
           <div className="text-center">
-            <MdDirectionsCar size={24} className="mx-auto text-slate-600" />
+            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <Car size={24} className="text-green-600" />
+            </div>
             <p className="text-sm text-slate-600 mt-1">Parqueaderos</p>
             <p className="font-bold">{property.parking}</p>
           </div>
           <div className="text-center">
-            <MdHome size={24} className="mx-auto text-slate-600" />
+            <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
+              <Star size={24} className="text-purple-600" />
+            </div>
             <p className="text-sm text-slate-600 mt-1">Estrato</p>
             <p className="font-bold">{property.stratum}</p>
           </div>
@@ -458,12 +472,12 @@ const PropertyView = ({ property }) => (
         <div className="flex gap-2">
           <span className={`px-3 py-1 rounded-full text-sm font-medium ${
             property.status === 'Venta' 
-              ? 'bg-blue-100 text-blue-800' 
-              : 'bg-green-100 text-green-800'
+              ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white' 
+              : 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white'
           }`}>
             {property.status}
           </span>
-          <span className="px-3 py-1 rounded-full text-sm font-medium bg-slate-100 text-slate-800">
+          <span className="px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-slate-100 to-slate-200 text-slate-800">
             {property.type}
           </span>
         </div>
@@ -481,8 +495,8 @@ const PropertyView = ({ property }) => (
 
 const DeleteConfirmation = ({ property, onConfirm, onCancel }) => (
   <div className="p-6 text-center">
-    <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-      <MdDelete size={32} className="text-red-600" />
+    <div className="w-16 h-16 bg-gradient-to-r from-red-100 to-red-200 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+      <Trash2 size={32} className="text-red-600" />
     </div>
     <h3 className="text-xl font-bold text-slate-800 mb-2">¿Eliminar propiedad?</h3>
     <p className="text-slate-600 mb-6">
@@ -491,13 +505,13 @@ const DeleteConfirmation = ({ property, onConfirm, onCancel }) => (
     <div className="flex gap-4">
       <button
         onClick={onCancel}
-        className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-3 px-6 rounded-lg transition-colors font-medium"
+        className="flex-1 bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-700 py-3 px-6 rounded-lg transition-all duration-200 font-medium shadow-lg"
       >
         Cancelar
       </button>
       <button
         onClick={onConfirm}
-        className="flex-1 bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-lg transition-colors font-medium"
+        className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-3 px-6 rounded-lg transition-all duration-200 font-medium shadow-lg"
       >
         Eliminar
       </button>
@@ -624,9 +638,9 @@ const PropertiesManagementPage = () => {
           </div>
           <button
             onClick={() => setShowCreateModal(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors font-medium"
+            className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
           >
-            <MdAdd size={20} />
+            <Plus size={20} />
             Nueva Propiedad
           </button>
         </motion.div>
@@ -636,24 +650,24 @@ const PropertiesManagementPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg"
+          className="bg-gradient-to-br from-white to-slate-50/50 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
         >
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="relative">
-              <MdSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
               <input
                 type="text"
                 placeholder="Buscar propiedades..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/80 backdrop-blur-sm"
               />
             </div>
             
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}
-              className="px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/80 backdrop-blur-sm"
             >
               {propertyTypes.map(type => (
                 <option key={type} value={type}>{type}</option>
@@ -663,7 +677,7 @@ const PropertiesManagementPage = () => {
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/80 backdrop-blur-sm"
             >
               {statusOptions.map(status => (
                 <option key={status} value={status}>{status}</option>
@@ -671,7 +685,9 @@ const PropertiesManagementPage = () => {
             </select>
             
             <div className="flex items-center text-slate-600">
-              <MdFilterList className="mr-2" />
+              <div className="p-2 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-lg mr-2">
+                <Filter className="h-4 w-4 text-indigo-600" />
+              </div>
               <span>{filteredProperties.length} propiedades encontradas</span>
             </div>
           </div>

@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  MdAdd, 
-  MdSearch, 
-  MdFilterList, 
-  MdEdit, 
-  MdDelete, 
-  MdVisibility,
-  MdClose,
-  MdCalendarToday,
-  MdAccessTime,
-  MdPerson,
-  MdHome,
-  MdPhone,
-  MdEmail,
-  MdSave,
-  MdCancel,
-  MdEvent,
-  MdLocationOn
-} from 'react-icons/md';
+  Plus,
+  Search,
+  Filter,
+  Edit3,
+  Trash2,
+  Eye,
+  X,
+  Calendar,
+  Clock,
+  User,
+  Home,
+  Phone,
+  Mail,
+  Save,
+  XCircle,
+  CalendarDays,
+  MapPin,
+  Sparkles,
+  Star,
+  Crown
+} from 'lucide-react';
 import DashboardLayout from '../../../../shared/components/dashboard/Layout/DashboardLayout';
 import { useToast } from '../../../../shared/hooks/use-toast';
 
@@ -51,9 +54,9 @@ const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
               <h2 className="text-2xl font-bold text-slate-800">{title}</h2>
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-slate-100 rounded-full transition-colors"
+                className="p-2 hover:bg-red-50 hover:text-red-600 rounded-full transition-colors group"
               >
-                <MdClose size={24} />
+                <X size={24} className="group-hover:rotate-90 transition-transform duration-200" />
               </button>
             </div>
             <div className="overflow-y-auto max-h-[calc(90vh-80px)]">
@@ -416,17 +419,17 @@ const AppointmentForm = ({ appointment, onSave, onCancel, properties = [] }) => 
       <div className="flex gap-4 pt-4 border-t border-slate-200">
         <button
           type="submit"
-          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 font-medium"
+          className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-lg hover:shadow-xl"
         >
-          <MdSave size={20} />
+          <Save size={20} />
           {appointment ? 'Actualizar' : 'Crear'} Cita
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 font-medium"
+          className="flex-1 bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-700 py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-lg hover:shadow-xl"
         >
-          <MdCancel size={20} />
+          <XCircle size={20} />
           Cancelar
         </button>
       </div>
@@ -454,21 +457,27 @@ const AppointmentView = ({ appointment, properties = [] }) => {
             <h3 className="text-xl font-bold text-slate-800 mb-2">Información del Cliente</h3>
             <div className="bg-slate-50 p-4 rounded-lg space-y-3">
               <div className="flex items-center gap-3">
-                <MdPerson className="text-slate-600" size={20} />
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <User className="text-blue-600" size={20} />
+                </div>
                 <div>
                   <p className="font-medium">{appointment.clientName}</p>
                   <p className="text-sm text-slate-600">Cliente</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <MdPhone className="text-slate-600" size={20} />
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <Phone className="text-green-600" size={20} />
+                </div>
                 <div>
                   <p className="font-medium">{appointment.clientPhone}</p>
                   <p className="text-sm text-slate-600">Teléfono</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <MdEmail className="text-slate-600" size={20} />
+                <div className="p-2 bg-purple-100 rounded-lg">
+                  <Mail className="text-purple-600" size={20} />
+                </div>
                 <div>
                   <p className="font-medium">{appointment.clientEmail}</p>
                   <p className="text-sm text-slate-600">Email</p>
@@ -481,7 +490,9 @@ const AppointmentView = ({ appointment, properties = [] }) => {
             <h3 className="text-xl font-bold text-slate-800 mb-2">Detalles de la Cita</h3>
             <div className="bg-slate-50 p-4 rounded-lg space-y-3">
               <div className="flex items-center gap-3">
-                <MdCalendarToday className="text-slate-600" size={20} />
+                <div className="p-2 bg-indigo-100 rounded-lg">
+                  <Calendar className="text-indigo-600" size={20} />
+                </div>
                 <div>
                   <p className="font-medium">{new Date(appointment.date).toLocaleDateString('es-ES', {
                     weekday: 'long',
@@ -493,14 +504,18 @@ const AppointmentView = ({ appointment, properties = [] }) => {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <MdAccessTime className="text-slate-600" size={20} />
+                <div className="p-2 bg-orange-100 rounded-lg">
+                  <Clock className="text-orange-600" size={20} />
+                </div>
                 <div>
                   <p className="font-medium">{appointment.time}</p>
                   <p className="text-sm text-slate-600">Hora</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <MdEvent className="text-slate-600" size={20} />
+                <div className="p-2 bg-emerald-100 rounded-lg">
+                  <CalendarDays className="text-emerald-600" size={20} />
+                </div>
                 <div>
                   <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(appointment.status)}`}>
                     {appointment.status}
@@ -523,11 +538,11 @@ const AppointmentView = ({ appointment, properties = [] }) => {
               />
               <h4 className="font-bold text-lg">{property.title}</h4>
               <div className="flex items-center text-slate-600 mt-1 mb-2">
-                <MdLocationOn size={16} className="mr-1" />
+                <MapPin size={16} className="mr-1 text-red-500" />
                 <span className="text-sm">{property.address}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-lg font-bold text-blue-600">{property.price}</span>
+                <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{property.price}</span>
                 <span className="text-sm text-slate-500">{property.area} m²</span>
               </div>
             </div>
@@ -553,8 +568,8 @@ const AppointmentView = ({ appointment, properties = [] }) => {
 
 const DeleteConfirmation = ({ appointment, onConfirm, onCancel }) => (
   <div className="p-6 text-center">
-    <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-      <MdDelete size={32} className="text-red-600" />
+    <div className="w-16 h-16 bg-gradient-to-r from-red-100 to-red-200 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+      <Trash2 size={32} className="text-red-600" />
     </div>
     <h3 className="text-xl font-bold text-slate-800 mb-2">¿Eliminar cita?</h3>
     <p className="text-slate-600 mb-6">
@@ -563,13 +578,13 @@ const DeleteConfirmation = ({ appointment, onConfirm, onCancel }) => (
     <div className="flex gap-4">
       <button
         onClick={onCancel}
-        className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-3 px-6 rounded-lg transition-colors font-medium"
+        className="flex-1 bg-gradient-to-r from-slate-200 to-slate-300 hover:from-slate-300 hover:to-slate-400 text-slate-700 py-3 px-6 rounded-lg transition-all duration-200 font-medium shadow-lg"
       >
         Cancelar
       </button>
       <button
         onClick={onConfirm}
-        className="flex-1 bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-lg transition-colors font-medium"
+        className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-3 px-6 rounded-lg transition-all duration-200 font-medium shadow-lg"
       >
         Eliminar
       </button>
@@ -716,9 +731,9 @@ const AppointmentsManagementPage = () => {
           </div>
           <button
             onClick={() => setShowCreateModal(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors font-medium"
+            className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
           >
-            <MdAdd size={20} />
+            <Plus size={20} />
             Nueva Cita
           </button>
         </motion.div>
@@ -728,24 +743,24 @@ const AppointmentsManagementPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg"
+          className="bg-gradient-to-br from-white to-slate-50/50 backdrop-blur-sm border border-slate-200/60 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
         >
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="relative">
-              <MdSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
               <input
                 type="text"
                 placeholder="Buscar citas..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/80 backdrop-blur-sm"
               />
             </div>
             
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/80 backdrop-blur-sm"
             >
               {statusOptions.map(status => (
                 <option key={status} value={status}>{status}</option>
@@ -756,11 +771,13 @@ const AppointmentsManagementPage = () => {
               type="date"
               value={filterDate}
               onChange={(e) => setFilterDate(e.target.value)}
-              className="px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/80 backdrop-blur-sm"
             />
             
             <div className="flex items-center text-slate-600">
-              <MdFilterList className="mr-2" />
+              <div className="p-2 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-lg mr-2">
+                <Filter className="h-4 w-4 text-indigo-600" />
+              </div>
               <span>{filteredAppointments.length} citas encontradas</span>
             </div>
           </div>
@@ -771,11 +788,11 @@ const AppointmentsManagementPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white/80 backdrop-blur-sm border border-slate-200/60 rounded-2xl shadow-lg overflow-hidden"
+          className="bg-gradient-to-br from-white to-slate-50/50 backdrop-blur-sm border border-slate-200/60 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
         >
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-slate-50 border-b border-slate-200">
+              <thead className="bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200">
                 <tr>
                   <th className="text-left py-4 px-6 font-semibold text-slate-700">Cliente</th>
                   <th className="text-left py-4 px-6 font-semibold text-slate-700">Contacto</th>
@@ -794,7 +811,7 @@ const AppointmentsManagementPage = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 + index * 0.05 }}
-                      className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors"
+                      className="border-b border-slate-100 hover:bg-gradient-to-r hover:from-slate-50/50 hover:to-blue-50/30 transition-all duration-200"
                     >
                       <td className="py-4 px-6">
                         <div>
@@ -831,30 +848,30 @@ const AppointmentsManagementPage = () => {
                               setSelectedAppointment(appointment);
                               setShowViewModal(true);
                             }}
-                            className="p-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                            className="p-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 hover:shadow-md"
                             title="Ver detalles"
                           >
-                            <MdVisibility size={18} />
+                            <Eye size={18} />
                           </button>
                           <button
                             onClick={() => {
                               setSelectedAppointment(appointment);
                               setShowEditModal(true);
                             }}
-                            className="p-2 text-slate-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                            className="p-2 text-slate-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-all duration-200 hover:shadow-md"
                             title="Editar"
                           >
-                            <MdEdit size={18} />
+                            <Edit3 size={18} />
                           </button>
                           <button
                             onClick={() => {
                               setSelectedAppointment(appointment);
                               setShowDeleteModal(true);
                             }}
-                            className="p-2 text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            className="p-2 text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 hover:shadow-md"
                             title="Eliminar"
                           >
-                            <MdDelete size={18} />
+                            <Trash2 size={18} />
                           </button>
                         </div>
                       </td>
